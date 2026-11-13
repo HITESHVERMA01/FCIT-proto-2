@@ -22,12 +22,37 @@ if (!jwtSecret || jwtSecret.startsWith('replace_with_') || jwtSecret.length < 32
   );
 }
 
+function sanitizeMongoUri(raw) {
+  if (!raw) return 'mongodb://127.0.0.1:27017/fcit_db';
+  let uri = raw.trim().replace(/^['"]|['"]$/g, '');
+  // Auto-strip accidental documentation angle brackets: <password>
+  uri = uri.replace(/:(<)([^>@]+)(>)@/, ':$2@');
+  // Auto-ensure database name if omitted or trailing slash
+  const match = uri.match(/^(mongodb(?:\+srv)?:\/\/[^/]+)(\/)?([^?]*)(.*)$/);
+  if (match) {
+    const base = match[1];
+    let db = match[3];
+    const query = match[4] || '';
+    if (!db) db = 'fcit_db';
+    uri = base + '/' + db + (query ? query : '?retryWrites=true&w=majority');
+  }
+  return uri;
+}
+
+const rawMongoUri =
+  process.env.MONGODB_URI ||
+  process.env.mongodb_uri ||
+  process.env.MONGODB_URL ||
+  process.env.mongodb_url ||
+  process.env.DATABASE_URL ||
+  '';
+
 export const env = {
   nodeEnv,
   isProd,
   port: Number(process.env.PORT || 5000),
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
-  mongodbUri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/fcit_db',
+  mongodbUri: sanitizeMongoUri(rawMongoUri),
   enableLocalMongoFallback:
     process.env.ENABLE_LOCAL_MONGO_FALLBACK !== 'false' && !isProd,
   jwtSecret,
