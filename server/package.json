@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch server.js",
+    "build": "echo 'Server build not required'",
     "start": "node server.js",
     "seed:admin": "node scripts/seedAdmin.js",
     "lint": "eslint ."
