@@ -1,0 +1,125 @@
+/* ==========================================================================
+   FCIT Living Legacy Archive — Timeline Styles
+   Strictly inherits global theme tokens from styles/tokens.css
+   No arbitrary colors, no heavy card borders, no vertical scroll hijacking.
+   ========================================================================== */
+
+.fcit-timeline-stage {
+  position: relative;
+  width: 100%;
+  background-color: var(--fcit-cream);
+  color: var(--fcit-ink);
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+/* Soft horizontal vignette blending entering/exiting panels seamlessly into var(--fcit-cream) */
+.fcit-timeline-mask {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.92) 7%,
+    #000000 13%,
+    #000000 87%,
+    rgba(0, 0, 0, 0.92) 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.92) 7%,
+    #000000 13%,
+    #000000 87%,
+    rgba(0, 0, 0, 0.92) 93%,
+    transparent 100%
+  );
+}
+
+/* Central Vertical Scanner Beam inheriting global institutional navy, cyan & gold */
+.fcit-scanner-beam-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  width: 44px;
+  pointer-events: none;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fcit-scanner-core {
+  width: 2px;
+  flex: 1;
+  background-color: var(--fcit-navy);
+  opacity: 0.78;
+  box-shadow:
+    0 0 10px rgba(143, 213, 241, 0.65),
+    0 0 26px rgba(211, 175, 55, 0.28),
+    0 0 54px rgba(11, 39, 71, 0.14);
+  transition: opacity var(--duration-hover) var(--ease-fcit);
+}
+
+.fcit-scanner-halo {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 50%;
+  width: 6px;
+  transform: translate3d(-50%, 0, 0);
+  background-color: transparent;
+  box-shadow:
+    0 0 22px 6px rgba(143, 213, 241, 0.22),
+    0 0 48px 14px rgba(211, 175, 55, 0.11);
+  pointer-events: none;
+}
+
+.fcit-scanner-node {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--fcit-cream);
+  border: 1.5px solid var(--fcit-navy);
+  box-shadow: 0 0 10px rgba(143, 213, 241, 0.65);
+}
+
+.fcit-scanner-node--bottom {
+  border-color: var(--fcit-gold-ink);
+  background-color: var(--fcit-gold-emblem);
+  box-shadow: 0 0 10px rgba(211, 175, 55, 0.45);
+}
+
+/* Synchronized belt slot positioning (GPU transform only) */
+.fcit-belt-slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.fcit-belt-layer {
+  position: absolute;
+  inset: 0;
+  will-change: clip-path;
+}
+
+/* Architectural archival mat when a milestone awaits verified photography */
+.fcit-archival-grid {
+  background-color: var(--fcit-ivory);
+}
+
+/* Reduced motion mode */
+@media (prefers-reduced-motion: reduce) {
+  .fcit-scanner-core {
+    box-shadow: 0 0 6px rgba(11, 39, 71, 0.25);
+  }
+
+  .fcit-belt-slot,
+  .fcit-belt-layer {
+    will-change: auto;
+  }
+}

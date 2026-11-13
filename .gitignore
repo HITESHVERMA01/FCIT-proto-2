@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build outputs
+client/dist/
+build/
+dist/
+
+# Environment variables & secrets (STRICT)
+.env
+.env.*
+!.env.example
+client/.env
+client/.env.*
+!client/.env.example
+server/.env
+server/.env.*
+!server/.env.example
+*.env
+*.env.local
+
+# Certificates & keys
+*.pem
+*.key
+*.cert
+*.crt
+
+# Local persistent database & uploaded user media
+server/.data/
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs & temporary files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+*.swp
+
+# Testing & scratch
+scratch/
+playwright-report/
+test-results/
+coverage/
+.cache/
+.eslintcache
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project

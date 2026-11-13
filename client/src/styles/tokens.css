@@ -1,0 +1,141 @@
+/* ==========================================================================
+   FCIT 2.0 Global Design Tokens
+   Sampled from the official FCIT emblem + Vela light theme palette
+   ========================================================================== */
+
+:root {
+  /* Core Surfaces & Ink */
+  --fcit-cream: #FBF6EF;
+  --fcit-ivory: #FEF7E5;
+  --fcit-surface-glass: rgba(251, 246, 239, 0.86);
+  --fcit-ink: #0D0D0C;
+  --fcit-secondary: #2A2E35;
+  --fcit-muted: #555A64;
+  --fcit-hairline: #8B9098;
+  --fcit-border: rgba(11, 39, 71, 0.14);
+  --fcit-border-strong: rgba(11, 39, 71, 0.28);
+
+  /* Institutional Emblem Colors */
+  --fcit-navy: #0B2747;
+  --fcit-navy-deep: #011E3E;
+  --fcit-gold: #D5AD43;
+  --fcit-gold-emblem: #D3AF37;
+  --fcit-gold-ink: #7B5C12;
+
+  /* Vela Atmospheric Pastel Transitions */
+  --fcit-lemon-soft: #F2ECDF;
+  --fcit-lemon: #F4EBC6;
+  --fcit-peach-soft: #F8DCC7;
+  --fcit-peach: #F9CBA9;
+  --fcit-sage-soft: #E9EBE0;
+  --fcit-sage: #DFE9D4;
+  --fcit-rose-soft: #F0E4E6;
+  --fcit-rose: #ECD6E2;
+  --fcit-cyan: #8FD5F1;
+  --fcit-periwinkle: #D2DAFF;
+
+  /* Semantic Feedback Tokens */
+  --fcit-success-bg: #E9EBE0;
+  --fcit-success-ink: #1C4B2C;
+  --fcit-error-bg: #F6E2E0;
+  --fcit-error-ink: #8C1D18;
+  --fcit-warning-bg: #F4EBC6;
+  --fcit-warning-ink: #6B4E08;
+
+  /* Strict SKILL.md Spacing Tokens */
+  --space-0: 0px;
+  --space-25: 2px;
+  --space-50: 4px;
+  --space-75: 8px;
+  --space-100: 12px;
+  --space-200: 16px;
+  --space-300: 24px;
+  --space-400: 32px;
+  --space-500: 40px;
+  --space-600: 48px;
+  --space-700: 64px;
+  --space-800: 80px;
+  --space-900: 96px;
+
+  /* Motion Curves & Timings */
+  --ease-fcit: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-fcit-scroll: cubic-bezier(0.22, 0.7, 0.2, 1);
+  --duration-hover: 300ms;
+  --duration-layout: 500ms;
+  --duration-reveal: 700ms;
+
+  /* Global ScrollDirector CSS Custom Properties (mutated inside batched rAF only) */
+  --scroll-progress: 0;
+  --hero-scroll-progress: 0;
+  --bowl-scale-x: 1;
+  --bowl-scale-y: 1;
+  --bowl-shift-y: 0px;
+  --bowl-opacity: 0.92;
+  --bowl-tip: 0.54;
+  --bowl-half: 0.58;
+  --bowl-soft: 1;
+  --nav-cta-progress: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--fcit-cream);
+  color: var(--fcit-ink);
+  font-family: 'Geist', system-ui, sans-serif;
+  scroll-behavior: auto;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--fcit-cream);
+  color: var(--fcit-ink);
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+/* Enforce zero italic typography anywhere in interface per SKILL.md */
+em,
+i,
+cite,
+address {
+  font-style: normal;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Accessible high-contrast focus indicator */
+:focus-visible {
+  outline: 2px solid var(--fcit-navy);
+  outline-offset: 2px;
+}
+
+/* Skip to content keyboard link */
+.skip-to-content {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 8px 12px;
+  background-color: var(--fcit-navy-deep);
+  color: var(--fcit-cream);
+  border-radius: 8px;
+  transform: translateY(-200%);
+  transition: transform 300ms var(--ease-fcit-scroll);
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  transform: translateY(0);
+}

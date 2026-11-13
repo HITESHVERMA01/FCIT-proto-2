@@ -1,0 +1,250 @@
+/* ==========================================================================
+   FCIT 2.0 Global Scroll & Atmospheric Motion Rules
+   Curve: cubic-bezier(0.22, 0.7, 0.2, 1)
+   Animates compositor properties (transform & opacity) exclusively.
+   ========================================================================== */
+
+/* Global Scroll Section Entrances */
+.reveal-block,
+.scroll-section-reveal {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition:
+    opacity var(--duration-reveal) var(--ease-fcit-scroll),
+    transform var(--duration-reveal) var(--ease-fcit-scroll);
+  will-change: transform, opacity;
+}
+
+.reveal-block.is-revealed,
+.scroll-section-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Staggered Hero Mount Sequence (zero scroll-blocking overhead) */
+@keyframes fcitHeroEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fcitHeroFrameSettle {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(1.035);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes fcitCueFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 4px, 0);
+  }
+}
+
+.hero-stage-item {
+  opacity: 0;
+  animation: fcitHeroEnter 680ms var(--ease-fcit-scroll) both;
+}
+
+.hero-stage-1 {
+  animation-delay: 40ms;
+}
+
+.hero-stage-2 {
+  animation-delay: 110ms;
+}
+
+.hero-stage-3 {
+  animation-delay: 180ms;
+}
+
+.hero-stage-4 {
+  animation-delay: 250ms;
+}
+
+.hero-stage-5 {
+  opacity: 0;
+  animation: fcitHeroFrameSettle 820ms var(--ease-fcit-scroll) 210ms both;
+}
+
+.hero-scroll-cue-icon {
+  animation: fcitCueFloat 2.6s ease-in-out infinite;
+}
+
+/* Global Hairline Reading Progress Bar */
+.fcit-scroll-progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+.fcit-scroll-progress-bar {
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(var(--scroll-progress, 0));
+  background: linear-gradient(90deg, #0B2747 0%, #8FD5F1 55%, #D5AD43 100%);
+  will-change: transform;
+}
+
+/* Halden-inspired Atmospheric Bowl Layers (GPU transform & opacity only) */
+.fcit-ambient-bowl-wrap {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  contain: layout style paint;
+}
+
+.fcit-ambient-bowl-cream {
+  position: absolute;
+  left: 50%;
+  top: -16vh;
+  width: 112vw;
+  height: 70vh;
+  border-radius: 9999px;
+  transform-origin: 50% 20%;
+  background: radial-gradient(
+    ellipse 58% 54% at 50% 42%,
+    rgba(254, 247, 229, 0.92) 0%,
+    rgba(251, 246, 239, 0.48) 54%,
+    rgba(251, 246, 239, 0) 82%
+  );
+  will-change: transform, opacity;
+}
+
+.fcit-ambient-bowl-soft {
+  position: absolute;
+  left: 50%;
+  top: -20vh;
+  width: 152vw;
+  height: 102vh;
+  border-radius: 9999px;
+  transform-origin: 50% 18%;
+  background: radial-gradient(
+    ellipse 64% 60% at 50% 44%,
+    rgba(210, 218, 255, 0.56) 0%,
+    rgba(143, 213, 241, 0.24) 44%,
+    rgba(251, 246, 239, 0) 76%
+  );
+  will-change: transform, opacity;
+}
+
+.fcit-ambient-bowl-cyan {
+  position: absolute;
+  left: 50%;
+  top: -26vh;
+  width: 134vw;
+  height: 86vh;
+  border-radius: 9999px;
+  transform-origin: 50% 14%;
+  background: radial-gradient(
+    ellipse 58% 54% at 50% 48%,
+    rgba(254, 247, 229, 0.52) 0%,
+    rgba(143, 213, 241, 0.42) 48%,
+    rgba(210, 218, 255, 0.28) 68%,
+    rgba(251, 246, 239, 0) 82%
+  );
+  will-change: transform, opacity;
+}
+
+/* Light Mobile Mode for Smooth Battery & 60fps Touch Scroll */
+@media (max-width: 767px) {
+  .fcit-ambient-bowl-soft {
+    width: 176vw;
+    height: 64vh;
+    top: -10vh;
+    opacity: 0.72;
+  }
+
+  .fcit-ambient-bowl-cyan,
+  .fcit-ambient-bowl-cream {
+    display: none;
+  }
+}
+
+/* Smooth continuous editorial section backdrop transition */
+.editorial-band {
+  position: relative;
+  transition: background-color 650ms var(--ease-fcit-scroll);
+}
+
+/* Soft feather bridge eliminates sharp edges between tonal sections */
+.editorial-band::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 48px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(251, 246, 239, 0.24),
+    rgba(251, 246, 239, 0)
+  );
+}
+
+/* Reduced motion support per SKILL.md B7, B11 & Global Scroll Spec */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-block,
+  .scroll-section-reveal,
+  .hero-stage-item,
+  .hero-stage-5 {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: opacity 250ms var(--ease-fcit-scroll) !important;
+    will-change: auto !important;
+  }
+
+  .hero-scroll-cue-icon {
+    animation: none !important;
+  }
+
+  .fcit-scroll-progress-bar,
+  .fcit-ambient-bowl-soft,
+  .fcit-ambient-bowl-cyan,
+  .fcit-ambient-bowl-cream {
+    will-change: auto !important;
+  }
+
+  .fcit-ambient-bowl-soft {
+    transform: translate3d(-50%, 0, 0) scale(1) !important;
+    opacity: 0.78 !important;
+  }
+
+  .fcit-ambient-bowl-cyan {
+    transform: translate3d(-50%, 0, 0) scale(1) !important;
+    opacity: 0.56 !important;
+  }
+
+  .fcit-ambient-bowl-cream {
+    transform: translate3d(-50%, 0, 0) scale(1) !important;
+    opacity: 0.88 !important;
+  }
+
+  .motion-reduce-static {
+    animation: none !important;
+    transition: opacity 250ms var(--ease-fcit-scroll) !important;
+    transform: none !important;
+  }
+}

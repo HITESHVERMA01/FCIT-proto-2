@@ -1,0 +1,41 @@
+/* ==========================================================================
+   FCIT People Showcase — Styles
+   Inherits global color tokens and ease curve strictly from styles/tokens.css
+   ========================================================================== */
+
+/* Gentle horizontal edge mask blending curved desktop carousel into page surface */
+.fcit-people-carousel-mask {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000000 6%,
+    #000000 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000000 6%,
+    #000000 94%,
+    transparent 100%
+  );
+}
+
+/* Mobile native snap strip: crisp horizontal swipe without capturing vertical page scroll */
+.fcit-mobile-people-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fcit-mobile-people-rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fcit-people-carousel-mask {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

@@ -1,0 +1,56 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  theme: {
+    extend: {
+      colors: {
+        fcit: {
+          cream: '#FBF6EF',
+          ivory: '#FEF7E5',
+          ink: '#0D0D0C',
+          secondary: '#2A2E35',
+          muted: '#555A64',
+          hairline: '#8B9098',
+          navy: '#0B2747',
+          navyDeep: '#011E3E',
+          gold: '#D5AD43',
+          goldEmblem: '#D3AF37',
+          goldInk: '#7B5C12',
+          lemonSoft: '#F2ECDF',
+          lemon: '#F4EBC6',
+          peachSoft: '#F8DCC7',
+          peach: '#F9CBA9',
+          sageSoft: '#E9EBE0',
+          sage: '#DFE9D4',
+          roseSoft: '#F0E4E6',
+          rose: '#ECD6E2',
+          cyan: '#8FD5F1',
+          periwinkle: '#D2DAFF',
+        },
+      },
+      fontFamily: {
+        sans: ['"Geist"', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+      },
+      spacing: {
+        0: '0px',
+        '0.5': '2px',
+        1: '4px',
+        2: '8px',
+        3: '12px',
+        4: '16px',
+        6: '24px',
+        8: '32px',
+        10: '40px',
+        12: '48px',
+        16: '64px',
+        20: '80px',
+        24: '96px',
+      },
+      transitionTimingFunction: {
+        fcit: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
+    },
+  },
+  plugins: [],
+};

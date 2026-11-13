@@ -1,0 +1,224 @@
+/* ==========================================================================
+   FCIT 2.0 Named Typography System (Strictly mapped to Tailwind Scale Steps)
+   No arbitrary font sizes, no italics, no weight 900.
+   ========================================================================== */
+
+@layer components {
+  .heading-1 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 3.75rem; /* text-6xl: 60px */
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .heading-2 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 3rem; /* text-5xl: 48px */
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .heading-3 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 2.25rem; /* text-4xl: 36px */
+    line-height: 2.5rem; /* 40px */
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .heading-4 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1.875rem; /* text-3xl: 30px */
+    line-height: 2.25rem; /* 36px */
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .heading-5 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1.5rem; /* text-2xl: 24px */
+    line-height: 2rem; /* 32px */
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .heading-6 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1.25rem; /* text-xl: 20px */
+    line-height: 1.75rem; /* 28px */
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .title-1 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .title-2 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75rem; /* 28px */
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .title-3 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1rem; /* 16px */
+    line-height: 1.5rem; /* 24px */
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .title-4 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+    font-weight: 500;
+  }
+
+  .title-5 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+    font-weight: 500;
+  }
+
+  .body-1 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    text-wrap: pretty;
+  }
+
+  .body-2 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  .body-3 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+    text-wrap: pretty;
+  }
+
+  .body-4 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    text-wrap: pretty;
+  }
+
+  .body-5 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  .body-6 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    text-wrap: pretty;
+  }
+
+  .button-lg {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+  }
+
+  .button-md {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+  }
+
+  .button-sm {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+  }
+
+  .button-xsm {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+  }
+
+  .caption-1 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+  }
+
+  .caption-2 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+  }
+
+  .caption-3 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+  }
+
+  .caption-4 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+  }
+
+  .caption-5 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 400;
+  }
+
+  .mono-meta {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-heading-ink {
+    background-image: linear-gradient(90deg, #011E3E 0%, #3F4E61 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
