@@ -73,7 +73,7 @@ export function PeopleSection({
 
         {loading ? (
           <ProfileSkeletonGrid count={4} />
-        ) : error ? (
+        ) : error && displayItems.length === 0 ? (
           <ErrorState message={error} onRetry={refetch} />
         ) : displayItems.length === 0 ? (
           <EmptyState
@@ -83,18 +83,39 @@ export function PeopleSection({
             actionHref={emptyCtaHref}
           />
         ) : (
-          <ProfileCarousel
-            items={displayItems}
-            ariaLabel={carouselAriaLabel}
-            renderCard={(person, idx) => (
-              <ProfileCard
-                person={person}
-                variantIndex={idx}
-                mode={mode}
-                portraitAspect="aspect-[4/5]"
-              />
+          <>
+            {error && (
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-800/20 bg-amber-50/80 px-4 py-3 text-amber-900">
+                <div className="flex items-center gap-2">
+                  <Info size={18} className="shrink-0 text-amber-800" aria-hidden="true" />
+                  <p className="body-6 text-amber-900">
+                    Connecting to live directory... Displaying reserved departmental structure slots.
+                  </p>
+                </div>
+                {refetch && (
+                  <button
+                    type="button"
+                    onClick={refetch}
+                    className="button-sm rounded-lg border border-amber-800/30 bg-white px-3 py-1 text-xs text-amber-900 transition hover:bg-amber-100"
+                  >
+                    Retry sync
+                  </button>
+                )}
+              </div>
             )}
-          />
+            <ProfileCarousel
+              items={displayItems}
+              ariaLabel={carouselAriaLabel}
+              renderCard={(person, idx) => (
+                <ProfileCard
+                  person={person}
+                  variantIndex={idx}
+                  mode={mode}
+                  portraitAspect="aspect-[4/5]"
+                />
+              )}
+            />
+          </>
         )}
       </div>
     </section>

@@ -32,22 +32,42 @@ export function createApp() {
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
-  const devOrigins = env.isProd
-    ? []
-    : [
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
-        'http://localhost:4173',
-        'http://127.0.0.1:4173',
-        `http://localhost:${env.port}`,
-        `http://127.0.0.1:${env.port}`,
-      ];
-  const allowedOrigins = Array.from(new Set([...configuredOrigins, ...devOrigins]));
+  const devOrigins = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:4173',
+    'http://127.0.0.1:4173',
+    `http://localhost:${env.port}`,
+    `http://127.0.0.1:${env.port}`,
+  ];
+  const staticOrigins = new Set([...configuredOrigins, ...devOrigins]);
+
+  const isOriginAllowed = (origin) => {
+    // Mobile apps, curl, server-to-server have no origin
+    if (!origin) return true;
+    if (staticOrigins.has(origin)) return true;
+    // Allow any Vercel domain (e.g. production or preview deployments)
+    if (/^https:\/\/([a-zA-Z0-9_-]+\.)*vercel\.app$/.test(origin)) return true;
+    // Allow localhost or 127.0.0.1
+    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return true;
+    // Allow Render domains
+    if (/^https:\/\/([a-zA-Z0-9_-]+\.)*onrender\.com$/.test(origin)) return true;
+    return false;
+  };
 
   app.use(
     cors({
-      origin: allowedOrigins,
+      origin: (origin, callback) => {
+        if (isOriginAllowed(origin)) {
+          return callback(null, true);
+        }
+        return callback(null, false);
+      },
       credentials: true,
+      methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+      exposedHeaders: ['Content-Range', 'X-Content-Range'],
+      maxAge: 86400,
     })
   );
 
