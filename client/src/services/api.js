@@ -15,6 +15,12 @@ async function request(path, options = {}) {
     headers.set('Content-Type', 'application/json');
   }
 
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('fcit_token') : null;
+  if (token && !headers.has('Authorization')) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers,

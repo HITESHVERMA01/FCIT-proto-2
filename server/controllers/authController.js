@@ -16,7 +16,7 @@ function signSessionToken(user) {
 function setSessionCookie(res, token) {
   res.cookie(env.cookieName, token, {
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: env.isProd ? 'none' : 'lax',
     secure: env.isProd,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/',
@@ -45,6 +45,7 @@ export const login = asyncHandler(async (req, res) => {
     success: true,
     data: {
       user: user.toJSON(),
+      token,
     },
   });
 });
@@ -74,6 +75,7 @@ export const register = asyncHandler(async (req, res) => {
     success: true,
     data: {
       user: user.toJSON(),
+      token,
     },
   });
 });
@@ -81,7 +83,7 @@ export const register = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (_req, res) => {
   res.clearCookie(env.cookieName, {
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: env.isProd ? 'none' : 'lax',
     secure: env.isProd,
     path: '/',
   });

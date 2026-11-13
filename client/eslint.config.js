@@ -29,6 +29,7 @@ export default [
         performance: 'readonly',
         requestAnimationFrame: 'readonly',
         cancelAnimationFrame: 'readonly',
+        localStorage: 'readonly',
       },
     },
     plugins: {

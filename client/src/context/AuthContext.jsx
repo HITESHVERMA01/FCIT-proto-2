@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
       const res = await api.get('/auth/me');
       setUser(res?.data?.user || null);
     } catch {
+      localStorage.removeItem('fcit_token');
       setUser(null);
     } finally {
       setLoading(false);
@@ -26,12 +27,18 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     const res = await api.post('/auth/login', credentials);
+    if (res?.data?.token) {
+      localStorage.setItem('fcit_token', res.data.token);
+    }
     setUser(res?.data?.user || null);
     return res?.data?.user;
   };
 
   const register = async (payload) => {
     const res = await api.post('/auth/register', payload);
+    if (res?.data?.token) {
+      localStorage.setItem('fcit_token', res.data.token);
+    }
     setUser(res?.data?.user || null);
     return res?.data?.user;
   };
@@ -40,6 +47,7 @@ export function AuthProvider({ children }) {
     try {
       await api.post('/auth/logout', {});
     } finally {
+      localStorage.removeItem('fcit_token');
       setUser(null);
     }
   };
