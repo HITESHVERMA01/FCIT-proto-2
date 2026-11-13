@@ -3,6 +3,10 @@
   "version": "2.0.0",
   "private": true,
   "description": "FCIT 2.0 — Official Website of the Association of Computer Science and Information Technology, HBTU Kanpur",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "dev:client": "npm --prefix client run dev",
