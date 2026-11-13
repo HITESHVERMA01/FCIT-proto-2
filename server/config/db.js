@@ -8,21 +8,43 @@ let localMongoServer = null;
 export async function connectDatabase() {
   mongoose.set('strictQuery', true);
 
+  console.log('[FCIT DB] Connecting to MongoDB...');
+
   try {
     await mongoose.connect(env.mongodbUri, {
       serverSelectionTimeoutMS: env.enableLocalMongoFallback ? 2500 : 10000,
     });
-    console.log(`[FCIT DB] Connected to MongoDB (${mongoose.connection.name})`);
+    console.log(`[FCIT DB] Connected successfully to database: "${mongoose.connection.name}"`);
     return mongoose.connection;
   } catch (err) {
     if (!env.enableLocalMongoFallback) {
+      console.error(`[FCIT DB] Connection failed: ${err.name} - ${err.message}`);
       if (env.mongodbUri.includes('127.0.0.1') || env.mongodbUri.includes('localhost')) {
         console.error(
           '\n====================================================================\n' +
-          '[FCIT DB] FATAL: Failed to connect to local MongoDB (127.0.0.1:27017).\n' +
-          'If you are deploying to Render or another cloud host, you must configure\n' +
-          'the MONGODB_URI environment variable in your hosting dashboard with your\n' +
-          'MongoDB Atlas connection string: mongodb+srv://.../fcit_db\n' +
+          '[FCIT DB] FATAL: MONGODB_URI is pointing to localhost (127.0.0.1:27017).\n' +
+          'In Render / production, set MONGODB_URI in your dashboard (Environment tab)\n' +
+          'to your MongoDB Atlas URI: mongodb+srv://<user>:<pass>@cluster0.xxxx.mongodb.net/fcit_db\n' +
+          '====================================================================\n'
+        );
+      } else if (err.message.includes('bad auth') || err.message.includes('Authentication failed')) {
+        console.error(
+          '\n====================================================================\n' +
+          '[FCIT DB] FATAL: Database authentication failed.\n' +
+          'Check that the username and password in MONGODB_URI match your MongoDB Atlas user.\n' +
+          '====================================================================\n'
+        );
+      } else if (
+        err.name === 'MongoNetworkError' ||
+        err.message.includes('SSL') ||
+        err.message.includes('alert') ||
+        err.name === 'MongooseServerSelectionError'
+      ) {
+        console.error(
+          '\n====================================================================\n' +
+          '[FCIT DB] FATAL: Network connection / SSL handshake failed.\n' +
+          'Make sure you have added 0.0.0.0/0 (Allow Access from Anywhere)\n' +
+          'in MongoDB Atlas -> Security -> Network Access tab!\n' +
           '====================================================================\n'
         );
       }

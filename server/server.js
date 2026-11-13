@@ -6,9 +6,10 @@ async function bootstrap() {
   await connectDatabase();
   const app = createApp();
 
-  const server = app.listen(env.port, () => {
+  const host = '0.0.0.0';
+  const server = app.listen(env.port, host, () => {
     console.log(
-      `[FCIT API] Server listening on http://localhost:${env.port} (${env.nodeEnv})`
+      `[FCIT API] Server listening on http://${host}:${env.port} (${env.nodeEnv})`
     );
   });
 
@@ -25,6 +26,6 @@ async function bootstrap() {
 }
 
 bootstrap().catch((err) => {
-  console.error('[FCIT API] Failed to start server:', err);
-  process.exit(1);
+  console.error('[FCIT API] Failed to start server:', err?.message || err);
+  setTimeout(() => process.exit(1), 500);
 });

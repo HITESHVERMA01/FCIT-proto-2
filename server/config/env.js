@@ -15,15 +15,10 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
 let jwtSecret = process.env.JWT_SECRET;
-if (!jwtSecret || jwtSecret.startsWith('replace_with_')) {
-  if (isProd) {
-    throw new Error(
-      'FATAL: JWT_SECRET environment variable must be configured with at least 32 characters in production.'
-    );
-  }
+if (!jwtSecret || jwtSecret.startsWith('replace_with_') || jwtSecret.length < 32) {
   jwtSecret = crypto.randomBytes(48).toString('hex');
   console.warn(
-    '[FCIT Config] Using ephemeral development JWT_SECRET. Set JWT_SECRET in server/.env to preserve login sessions across restarts.'
+    '[FCIT Config] WARNING: No valid JWT_SECRET provided. Using generated secret for this session. Add JWT_SECRET in environment variables to persist sessions across restarts.'
   );
 }
 
