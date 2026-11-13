@@ -16,6 +16,16 @@ export async function connectDatabase() {
     return mongoose.connection;
   } catch (err) {
     if (!env.enableLocalMongoFallback) {
+      if (env.mongodbUri.includes('127.0.0.1') || env.mongodbUri.includes('localhost')) {
+        console.error(
+          '\n====================================================================\n' +
+          '[FCIT DB] FATAL: Failed to connect to local MongoDB (127.0.0.1:27017).\n' +
+          'If you are deploying to Render or another cloud host, you must configure\n' +
+          'the MONGODB_URI environment variable in your hosting dashboard with your\n' +
+          'MongoDB Atlas connection string: mongodb+srv://.../fcit_db\n' +
+          '====================================================================\n'
+        );
+      }
       throw err;
     }
 
