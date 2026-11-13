@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { MagnifyingGlass } from '@phosphor-icons/react';
+import { CalendarBlank, MagnifyingGlass } from '@phosphor-icons/react';
 import { MainLayout } from '../layouts/MainLayout';
 import { PageHeader } from '../components/shared/PageHeader';
 import { ScrollSection } from '../components/scrolling/ScrollSection';
@@ -113,8 +113,25 @@ export function EventsPage() {
 
           {loading ? (
             <CardGridSkeleton count={6} />
-          ) : error ? (
-            <ErrorState message={error} onRetry={refetch} />
+          ) : error && filtered.length === 0 ? (
+            <div className="rounded-2xl border border-fcit-navy/15 bg-fcit-ivory/70 p-8 text-center max-w-2xl mx-auto">
+              <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-fcit-navy/15 bg-fcit-cream text-fcit-navy">
+                <CalendarBlank size={24} weight="regular" aria-hidden="true" />
+              </div>
+              <h3 className="heading-5 text-fcit-navyDeep mb-2">No events published yet</h3>
+              <p className="body-3 text-fcit-secondary mb-6">
+                FCIT coordinators publish verified workshops, hackathons, and department sessions here as schedules are finalized.
+              </p>
+              {refetch && (
+                <button
+                  type="button"
+                  onClick={refetch}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-fcit-navyDeep px-3 py-2 button-md text-fcit-cream transition duration-300 ease-fcit hover:bg-fcit-navy"
+                >
+                  Check for Updates
+                </button>
+              )}
+            </div>
           ) : filtered.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filtered.map((event, idx) => (

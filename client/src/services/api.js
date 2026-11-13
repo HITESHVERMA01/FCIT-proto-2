@@ -1,4 +1,16 @@
 function resolveApiBase() {
+  // When running in the browser on any Vercel domain, ALWAYS use relative /api.
+  // This directs requests through Vercel's edge proxy rewrites (configured in vercel.json)
+  // which forwards server-to-server to Render, eliminating all browser CORS issues completely.
+  if (
+    typeof window !== 'undefined' &&
+    window.location.hostname &&
+    (window.location.hostname.endsWith('vercel.app') ||
+      window.location.hostname.includes('vercel.app'))
+  ) {
+    return '/api';
+  }
+
   const envUrl = (import.meta.env.VITE_API_BASE_URL || '').trim();
   if (!envUrl) {
     return '/api';
@@ -90,6 +102,14 @@ export function resolveMediaUrl(url) {
     return url;
   }
   if (url.startsWith('/uploads/')) {
+    if (
+      typeof window !== 'undefined' &&
+      window.location.hostname &&
+      (window.location.hostname.endsWith('vercel.app') ||
+        window.location.hostname.includes('vercel.app'))
+    ) {
+      return url;
+    }
     const base = import.meta.env.VITE_API_BASE_URL || '';
     if (base.startsWith('http')) {
       return `${base.replace(/\/api\/?$/, '')}${url}`;

@@ -23,7 +23,6 @@ import { Reveal } from '../components/shared/Reveal';
 import {
   CardGridSkeleton,
   EmptyState,
-  ErrorState,
 } from '../components/shared/StateViews';
 import { useApiResource } from '../hooks/useApiResource';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
@@ -211,8 +210,33 @@ export function HomePage() {
 
           {eventsRes.loading ? (
             <CardGridSkeleton count={3} />
-          ) : eventsRes.error ? (
-            <ErrorState message={eventsRes.error} onRetry={eventsRes.refetch} />
+          ) : eventsRes.error && displayEvents.length === 0 ? (
+            <div className="rounded-2xl border border-fcit-navy/15 bg-fcit-ivory/70 p-8 text-center max-w-2xl mx-auto">
+              <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-fcit-navy/15 bg-fcit-cream text-fcit-navy">
+                <CalendarBlank size={24} weight="regular" aria-hidden="true" />
+              </div>
+              <h3 className="heading-5 text-fcit-navyDeep mb-2">No upcoming events are published yet</h3>
+              <p className="body-3 text-fcit-secondary mb-6">
+                FCIT coordinators publish verified workshops, coding contests, and department sessions here as schedules are finalized with faculty advisors.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  to="/events"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-fcit-navyDeep px-3 py-2 button-md text-fcit-cream transition duration-300 ease-fcit hover:bg-fcit-navy"
+                >
+                  Explore Events Archive
+                </Link>
+                {eventsRes.refetch && (
+                  <button
+                    type="button"
+                    onClick={eventsRes.refetch}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-fcit-navy/20 bg-fcit-cream px-3 py-2 button-md text-fcit-navyDeep transition duration-300 ease-fcit hover:bg-fcit-ivory"
+                  >
+                    Check for Updates
+                  </button>
+                )}
+              </div>
+            </div>
           ) : displayEvents.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {displayEvents.map((event, idx) => (
